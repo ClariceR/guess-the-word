@@ -16,3 +16,10 @@ const wordPlaceholder = word => {
 }
 
 wordPlaceholder(word);
+
+guessButton.addEventListener("click", e => {
+    e.preventDefault();
+    const letter = inputLetter.value;
+    console.log(letter);
+    inputLetter.value = '';
+})
