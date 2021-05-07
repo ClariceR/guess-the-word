@@ -8,3 +8,11 @@ const messageToDisplay = document.querySelector(".message");
 const playAgainButton = document.querySelector(".play-again");
 
 const word = "magnolia";
+
+const wordPlaceholder = word => {
+    for (let letter of word) {
+        wordInProgress.innerText += '●';
+    }
+}
+
+wordPlaceholder(word);
