@@ -1,4 +1,4 @@
-const guessedLetters = document.querySelector(".guessed-letters");
+const guessedLettersList = document.querySelector(".guessed-letters");
 const guessButton = document.querySelector(".guess");
 const inputLetter = document.querySelector(".letter");
 const wordInProgress = document.querySelector(".word-in-progress");
@@ -8,6 +8,7 @@ const message = document.querySelector(".message");
 const playAgainButton = document.querySelector(".play-again");
 
 const word = "magnolia";
+const guessedLetters = [];
 
 // Shows dots as placeholder for letters in the word to guess
 const wordPlaceholder = word => {
@@ -27,6 +28,9 @@ guessButton.addEventListener("click", e => {
     message.innerHTML = '';
     const validInput = validateInput(letter);
     console.log(validInput);
+    if (validInput) {
+        makeGuess(letter);
+    }
 });
 
 // Validate users input
@@ -41,4 +45,15 @@ const validateInput = letter => {
     } else {
         return letter;
     }
+}
+
+// Capture letters guessed
+const makeGuess = letter => {
+    letter = letter.toUpperCase();
+    if (guessedLetters.includes(letter)) {
+        message.innerHTML = "You have already guessed that letter. Try again."
+    } else {
+        guessedLetters.push(letter);
+    }
+    console.log(guessedLetters);
 }
