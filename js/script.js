@@ -54,6 +54,17 @@ const makeGuess = letter => {
         message.innerHTML = "You have already guessed that letter. Try again."
     } else {
         guessedLetters.push(letter);
+        showGuessedLetters();
     }
     console.log(guessedLetters);
+}
+
+// Show the Guessed Letters
+const showGuessedLetters = () => {
+    guessedLettersList.innerHTML = '';
+    for (let letter of guessedLetters) {
+        let li = document.createElement("li");
+        li.innerHTML = letter;
+        guessedLettersList.append(li);
+    }
 }
