@@ -84,5 +84,13 @@ const updateWord = guessedLetters => {
             wordInProgress.innerText = updatedWord;
         } 
     });
-    
+    isAWin(); 
+}
+
+// Check if player won
+const isAWin = () => {
+    if (wordInProgress.innerText === word.toUpperCase()) {
+        message.classList.add("win");
+        message.innerHTML = '<p class="highlight">You guessed correct the word! Congrats!</p>';
+    }
 }
