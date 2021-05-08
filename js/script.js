@@ -55,11 +55,12 @@ const makeGuess = letter => {
     } else {
         guessedLetters.push(letter);
         showGuessedLetters();
+        updateWord(guessedLetters);
     }
     console.log(guessedLetters);
 }
 
-// Show the Guessed Letters
+// Show the guessed letters
 const showGuessedLetters = () => {
     guessedLettersList.innerHTML = '';
     for (let letter of guessedLetters) {
@@ -67,4 +68,21 @@ const showGuessedLetters = () => {
         li.innerHTML = letter;
         guessedLettersList.append(li);
     }
+}
+
+// Helper function to replace dot by guessed letter
+String.prototype.replaceAt = function(index, replacement) {
+    return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+}
+
+// Update the word in progress
+const updateWord = guessedLetters => {
+    const wordUpper = word.toUpperCase();
+    [...wordUpper].forEach( function(letter, index) {
+        if (guessedLetters.includes(letter)) {
+            const updatedWord = wordInProgress.innerText.replaceAt(index, letter);
+            wordInProgress.innerText = updatedWord;
+        } 
+    });
+    
 }
