@@ -7,28 +7,37 @@ const numGuessesRemaining = document.querySelector(".remaining span");
 const message = document.querySelector(".message");
 const playAgainButton = document.querySelector(".play-again");
 
-const word = "magnolia";
+let word = "magnolia";
 const guessedLetters = [];
 let remainingGuesses = 8;
 
+// Async function to fetch data from words api
+const getWord = async () => {
+    const request = await fetch("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
+    const words = await request.text();
+    const wordArray = words.split("\n");
+    let randomIndex = Math.floor(Math.random() * wordArray.length)
+    const randomWord = wordArray[randomIndex].trim();
+    word = randomWord;
+    getPlaceholder(word);
+}
+getWord();
+
 // Shows dots as placeholder for letters in the word to guess
-const wordPlaceholder = word => {
+const getPlaceholder = word => {
     for (let letter of word) {
         wordInProgress.innerText += '●';
     }
 }
-wordPlaceholder(word);
 
 
 // Captures the input and resets it to blank
 guessButton.addEventListener("click", e => {
     e.preventDefault();
     const letter = inputLetter.value;
-    console.log(letter);
     inputLetter.value = '';
     message.innerHTML = '';
     const validInput = validateInput(letter);
-    console.log(validInput);
     if (validInput) {
         makeGuess(letter);
     }
@@ -59,7 +68,6 @@ const makeGuess = letter => {
         updateGuesses(letter);
         updateWord(guessedLetters);
     }
-    console.log(guessedLetters);
 }
 
 // Show the guessed letters
