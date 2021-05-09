@@ -30,7 +30,6 @@ const getPlaceholder = word => {
     }
 }
 
-
 // Captures the input and resets it to blank
 guessButton.addEventListener("click", e => {
     e.preventDefault();
@@ -94,7 +93,8 @@ const updateWord = guessedLetters => {
             wordInProgress.innerText = updatedWord;
         } 
     });
-    checkWin(); 
+    checkWin();
+    isGameOver();
 }
 
 // Updates guesses
@@ -120,5 +120,20 @@ const checkWin = () => {
     if (wordInProgress.innerText === word.toUpperCase()) {
         message.classList.add("win");
         message.innerHTML = '<p class="highlight">You guessed correct the word! Congrats!</p>';
+    }
+}
+
+// Starts over the game
+const startOver = () => {
+    guessButton.classList.add("hide");
+    messageRemainingGuesses.classList.add("hide");
+    guessedLettersList.classList.add("hide");
+    playAgainButton.classList.remove("hide");
+}
+
+// Check if the game is over
+const isGameOver = () => {
+    if (message.classList.contains("win") || remainingGuesses === 0) {
+        startOver();
     }
 }
