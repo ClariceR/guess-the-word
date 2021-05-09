@@ -9,6 +9,7 @@ const playAgainButton = document.querySelector(".play-again");
 
 const word = "magnolia";
 const guessedLetters = [];
+let remainingGuesses = 8;
 
 // Shows dots as placeholder for letters in the word to guess
 const wordPlaceholder = word => {
@@ -55,6 +56,7 @@ const makeGuess = letter => {
     } else {
         guessedLetters.push(letter);
         showGuessedLetters();
+        updateGuesses(letter);
         updateWord(guessedLetters);
     }
     console.log(guessedLetters);
@@ -84,11 +86,29 @@ const updateWord = guessedLetters => {
             wordInProgress.innerText = updatedWord;
         } 
     });
-    isAWin(); 
+    checkWin(); 
+}
+
+// Updates guesses
+const updateGuesses = guess => {
+    const wordUpper = word.toUpperCase();
+    if (wordUpper.includes(guess)){
+        messageRemainingGuesses.innerHTML = `Good guess! The word has the letter ${guess}.`
+    } else {
+        messageRemainingGuesses.innerHTML = `Oh no! The word doesn't have the letter ${guess}.`
+        remainingGuesses -= 1;
+    }
+    if (remainingGuesses === 0) {
+        messageRemainingGuesses.innerHTML = `Game over! The word was ${word}.`
+    } else if (remainingGuesses === 1) {
+        messageRemainingGuesses.innerHTML = `<p class="remaining">You have <span>1 guess</span> remaining.</p>`
+    } else {
+        messageRemainingGuesses.innerHTML = `<p class="remaining">You have <span>${remainingGuesses} guesses</span> remaining.</p>`
+    }
 }
 
 // Check if player won
-const isAWin = () => {
+const checkWin = () => {
     if (wordInProgress.innerText === word.toUpperCase()) {
         message.classList.add("win");
         message.innerHTML = '<p class="highlight">You guessed correct the word! Congrats!</p>';
