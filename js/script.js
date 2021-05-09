@@ -8,7 +8,7 @@ const message = document.querySelector(".message");
 const playAgainButton = document.querySelector(".play-again");
 
 let word = "magnolia";
-const guessedLetters = [];
+let guessedLetters = [];
 let remainingGuesses = 8;
 
 // Async function to fetch data from words api
@@ -107,7 +107,7 @@ const updateGuesses = guess => {
         remainingGuesses -= 1;
     }
     if (remainingGuesses === 0) {
-        messageRemainingGuesses.innerHTML = `Game over! The word was ${word}.`
+        message.innerHTML = `Game over! The word was ${word}.`
     } else if (remainingGuesses === 1) {
         messageRemainingGuesses.innerHTML = `<p class="remaining">You have <span>1 guess</span> remaining.</p>`
     } else {
@@ -137,3 +137,19 @@ const isGameOver = () => {
         startOver();
     }
 }
+
+// Play again button click event listener
+playAgainButton.addEventListener("click", () => {
+    message.classList.remove("win");
+    wordInProgress.innerText = '';
+    message.innerText = '';
+    guessedLettersList.innerHTML = '';
+    guessedLettersList.classList.remove("hide");
+    remainingGuesses = 8;
+    guessedLetters = [];
+    messageRemainingGuesses.innerHTML = `<p class="remaining">You have <span>${remainingGuesses} guesses</span> remaining.</p>`;
+    messageRemainingGuesses.classList.remove("hide");
+    guessButton.classList.remove("hide");
+    playAgainButton.classList.add("hide");
+    getWord();
+})
